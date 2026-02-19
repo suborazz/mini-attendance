@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Mini Attendance + Task Management System
 
 A professional, production-ready full-stack application featuring real-time attendance tracking and task management, secured with JWT and powered by Firebase Firestore.
@@ -140,3 +141,6 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
 - [x] JWT-protected private routes.
 - [x] Responsive "Flagship" UI with glassmorphism.
 - [x] Production-ready configuration.
+=======
+# mini-attendance
+>>>>>>> 6dc1dd9190b8528257e9d6f5ed5f3e28c90aee5d
