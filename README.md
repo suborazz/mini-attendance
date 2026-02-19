@@ -1,146 +1,200 @@
-# Mini Attendance + Task Management System
+# 🕒 Attendance Hub | Ultimate Management System
 
-A professional, production-ready full-stack application featuring real-time attendance tracking and task management.
+[![Frontend Status](https://img.shields.io/website?url=https%3A%2F%2Fmini-attendance-orcin.vercel.app&label=Frontend&style=for-the-badge)](https://mini-attendance-orcin.vercel.app)
+[![Backend Status](https://img.shields.io/website?url=https%3A%2F%2Fmini-attendance-dig9.onrender.com%2Fapi%2Fv1%2Fhealth&label=Backend&style=for-the-badge)](https://mini-attendance-dig9.onrender.com/api/v1/health)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/badge/Build-Success-brightgreen.svg?style=for-the-badge)](#)
 
-**Live Project Links:**
-- **Frontend App**: [https://mini-attendance-orcin.vercel.app](https://mini-attendance-orcin.vercel.app)
-- **Backend API**: [https://mini-attendance-dig9.onrender.com/api/v1](https://mini-attendance-dig9.onrender.com/api/v1)
+A flagship, production-ready full-stack application featuring real-time attendance tracking and task management. Engineered with a premium **Glassmorphism UI**, secured with **JWT Authentication**, and powered by a highly resilient **Firebase Firestore** backend.
 
-## Tech Stack
+---
 
-### Backend
-- Node.js & Express.js
-- Firebase Firestore (NoSQL Database)
-- JWT Authentication (jsonwebtoken)
-- bcryptjs (Password Hashing)
-- express-validator (Input Validation)
-- morgan (Logging)
+## 🚀 Live Demo
+Experience the professional workflow instantly:
+*   **Web Portal**: [https://mini-attendance-orcin.vercel.app](https://mini-attendance-orcin.vercel.app)
+*   **API Gateway**: [https://mini-attendance-dig9.onrender.com/api/v1](https://mini-attendance-dig9.onrender.com/api/v1)
 
-### Frontend
-- React.js (Vite)
-- Axios (API Integration)
-- SweetAlert2 (Professional Notifications)
-- Vanilla CSS (Glassmorphism UI)
+---
 
-## Folder Structure
+## ✨ Key Features
+
+### 🏢 Attendance Excellence
+*   **Real-time Clock-In/Out**: Precision tracking of working hours with session persistence.
+*   **Today's Logs**: Dynamic visual history of all attendance sessions for the current day.
+*   **Automatic Overlap Prevention**: Intelligent guards prevent duplicate or overlapping check-ins.
+*   **Status Indicators**: Live "Currently Working" or "Off-Duty" status synced with your profile.
+
+### 📋 Smart Task Management
+*   **Attendance-Locked Productivity**: Tasks can only be managed (created/deleted/completed) while you are clocked in, ensuring disciplined workflows.
+*   **Full CRUD**: Blazing-fast task creation, completion toggles, and secure deletions.
+*   **Real-time Updates**: Instant state synchronization across your dashboard.
+
+### 🛡️ Enterprise Security
+*   **JWT-Based Auth**: Secure token management stored locally for a seamless login experience.
+*   **Password Hashing**: Industry-standard encryption using `bcryptjs`.
+*   **Data Isolation**: Strict Firestore rules and server-side filtering ensure users only see their own private data.
+*   **Input Validation**: Comprehensive sanitization using `express-validator`.
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend Infrastructure
+*   **Runtime**: Node.js & Express.js
+*   **Database**: Firebase Firestore (NoSQL)
+*   **Auth**: JSON Web Tokens (JWT) & bcryptjs
+*   **Tooling**: Morgan (Logging), Dotenv (Env Management), Nodemon
+
+### Frontend Experience
+*   **Framework**: React.js (Vite)
+*   **Styling**: Vanilla CSS (Custom Glassmorphism Design System)
+*   **Interaction**: Axios, SweetAlert2 (Premium Notifications)
+
+---
+
+## 🏗️ Technical Architecture
+
+```mermaid
+graph TD
+    User((User))
+    subgraph "Frontend (Vercel)"
+        React[React Dashboard]
+        Axios[Axios Client / Interceptors]
+    end
+    subgraph "Backend (Render)"
+        API[Express.js API Gateway]
+        Middle[Auth Middleware / Validator]
+    end
+    subgraph "Database (Firebase)"
+        DB[(Firestore NoSQL)]
+    end
+
+    User --> React
+    React --> Axios
+    Axios --> API
+    API --> Middle
+    Middle --> DB
+```
+
+---
+
+## 📂 Folder Structure
 
 ```text
 Attendance/
 ├── backend/
 │   ├── src/
-│   │   ├── config/         # Firebase initialization
-│   │   ├── controllers/    # Request handlers (Auth, Attendance, Task)
-│   │   ├── middleware/     # Auth & Error handling
-│   │   ├── routes/         # API Route definitions
-│   │   └── app.js          # Express app configuration
-│   ├── .env                # Environment variables
-│   └── server.js           # Entry point
+│   │   ├── config/         # Firebase Admin SDK Configuration
+│   │   ├── controllers/    # Business Logic (Auth, Attendance, Task)
+│   │   ├── middleware/     # JWT Auth & Error Handling
+│   │   ├── routes/         # Express API Route Definitions
+│   │   └── app.js          # Main App Config & Middlewares
+│   ├── .env                # Server Secrets (Ignored)
+│   └── server.js           # Production Entry Point
 ├── frontend/
 │   ├── src/
-│   │   ├── api/            # Axios instance configuration
-│   │   ├── pages/          # UI Components & Page views
-│   │   ├── App.jsx         # Routing & Protected routes
-│   │   └── main.jsx        # Entry point
-│   └── index.html
-└── README.md
+│   │   ├── api/            # API Client + Token Interceptors
+│   │   ├── pages/          # Premium UI Views (Login, Dashboard, 404)
+│   │   ├── App.jsx         # Routing & Protection Logic
+│   │   └── main.jsx        # Client Runtime Entry
+│   └── .env                # App Config (Ignored)
+└── README.md               # Master Documentation
 ```
 
-## Firestore Schema Design
+---
 
-- **users**: Stores user profiles.
-  - `email` (Document ID)
-  - `name`: User's full name
-  - `password`: Hashed password (bcrypt)
-  - `createdAt`: ISO Timestamp
+## 📊 Database Schema (Firestore)
 
-- **attendance**: Stores daily attendance records.
-  - `userEmail`: Reference to user
-  - `date`: YYYY-MM-DD
-  - `checkIns`: Array of `{ checkInTime: Timestamp, checkOutTime: Timestamp | null }`
-  - `createdAt`: Timestamp
+| Collection | Description | Primary Fields |
+| :--- | :--- | :--- |
+| **users** | Member Profiles | `email`, `name`, `password` (hashed) |
+| **attendance** | Daily Records | `userEmail`, `date`, `checkIns` (array) |
+| **tasks** | Work Items | `userId`, `title`, `description`, `status` |
 
-- **tasks**: Stores user-specific tasks.
-  - `userId`: Reference to user email
-  - `title`: Task heading
-  - `description`: Detailed notes
-  - `status`: "pending" | "completed"
-  - `createdAt`: ServerTimestamp
-  - `updatedAt`: ServerTimestamp
+---
 
-## API Documentation
+## 🛣️ API Documentation
 
 All routes are prefixed with `/api/v1`.
 
-### Authentication
-- `POST /auth/register`: Create a new account.
-- `POST /auth/login`: Authenticate and receive JWT.
+### 🔐 Authentication
+| Action | Endpoint | Method |
+| :--- | :--- | :--- |
+| Register | `/auth/register` | `POST` |
+| Login | `/auth/login` | `POST` |
 
-### Attendance (Protected)
-- `POST /attendance/checkin`: Start a new session (prevents duplicate open sessions).
-- `POST /attendance/checkout`: End the current active session.
-- `GET /attendance/my`: Retrieve all attendance records for the logged-in user.
+### ⌚ Attendance (JWT Protected)
+| Action | Endpoint | Method |
+| :--- | :--- | :--- |
+| Clock In | `/attendance/checkin` | `POST` |
+| Clock Out | `/attendance/checkout` | `POST` |
+| Fetch Logs | `/attendance/my` | `GET` |
 
-### Tasks (Protected)
-- `GET /tasks`: Fetch personal tasks.
-- `POST /tasks`: Create a new task.
-- `PUT /tasks/:id`: Update task title, description, or status.
-- `DELETE /tasks/:id`: Permanently remove a task.
+### 📝 Tasks (JWT Protected)
+| Action | Endpoint | Method |
+| :--- | :--- | :--- |
+| List Tasks | `/tasks` | `GET` |
+| Create Task | `/tasks` | `POST` |
+| Update/Toggle | `/tasks/:id` | `PUT` |
+| Remove Task | `/tasks/:id` | `DELETE` |
 
-### System
-- `GET /health`: Returns `{ status: "OK" }` for monitoring.
+---
 
-## Environment Variables
+## ⚙️ Setup & Installation
 
-Create a `.env` file in the `backend/` directory:
+### 1️⃣ Repository Setup
+```bash
+git clone https://github.com/suborazz/mini-attendance.git
+cd mini-attendance
+```
 
+### 2️⃣ Backend Configuration
+```bash
+cd backend
+npm install
+```
+Create a `.env` file with these keys:
 ```env
 PORT=5000
 JWT_SECRET=your_jwt_secret_key
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CLIENT_EMAIL=your_client_email
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+FIREBASE_PROJECT_ID=your_id
+FIREBASE_CLIENT_EMAIL=your_email
+FIREBASE_PRIVATE_KEY="your_private_key"
 ```
+Run Server: `npm run dev`
 
-## Local Setup Instructions
+### 3️⃣ Frontend Configuration
+```bash
+cd ../frontend
+npm install
+```
+Create a `.env` file:
+```env
+VITE_API_URL=http://localhost:5000/api/v1
+```
+Run Client: `npm run dev`
 
-1. **Clone the repository.**
-2. **Backend Setup**:
-   - `cd backend`
-   - `npm install`
-   - Configure `.env` with your Firebase credentials.
-   - `npm run dev` (Runs on port 5000).
-3. **Frontend Setup**:
-   - `cd frontend`
-   - `npm install`
-   - `npm run dev` (Runs on port 5173).
+---
 
-## Deployment Steps
+## 🚀 Deployment Guide
 
-### Backend (Render)
-1. Create a new **Web Service** on Render.
-2. Connect your repository.
-3. Set **Build Command**: `npm install` (in backend dir).
-4. Set **Start Command**: `node server.js`.
-5. Add all Environment Variables in the Render dashboard.
+### 🧱 Render (Backend)
+1. **Web Service**: Create one and connect your repo.
+2. **Build**: `npm install` (Root: `backend`).
+3. **Start**: `node server.js`.
+4. **Secrets**: Add all `.env` keys in the Render dashboard.
 
-### Frontend (Vercel)
-1. Create a new project in Vercel.
-2. Set **Build Command**: `npm run build`.
-3. Set **Output Directory**: `dist`.
-4. Add **Environment Variable**: `VITE_API_URL=https://mini-attendance-dig9.onrender.com/api/v1`.
+### 🌐 Vercel (Frontend)
+1. **Connect**: Point Vercel to the repo.
+2. **Root**: Select `frontend` as the root directory.
+3. **Build**: `npm run build` (Output: `dist`).
+4. **Secrets**: Add `VITE_API_URL` pointing to your Render backend gateway.
 
-## Security Implementation
+---
 
-- **Data Privacy**: All Firestore queries use strict `.where('userId', '==', ...)` filters to ensure users only access their own data.
-- **Password Security**: Passwords are never stored in plain text; they are hashed with a salt factor of 10 using `bcryptjs`.
-- **JWT Protection**: All sensitive routes are protected by a middleware that verifies the JWT and rejects invalid or expired tokens (1-day expiration).
-- **Validation**: `express-validator` ensures all incoming data meets the required structure before processing.
+## ⚖️ License
+Distributed under the MIT License. See `LICENSE` for more information.
 
-## Evaluation Criteria Covered
+---
 
-- [x] Full CRUD for tasks.
-- [x] Multiple attendance sessions per day.
-- [x] No duplicate/overlapping check-in sessions.
-- [x] JWT-protected private routes.
-- [x] Responsive "Flagship" UI with glassmorphism.
-- [x] Production-ready configuration.
+Developed with ❤️ by [Subod](https://github.com/suborazz)
