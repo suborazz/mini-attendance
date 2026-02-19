@@ -124,7 +124,7 @@ FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY----
 1. Create a new project in Vercel.
 2. Set **Build Command**: `npm run build`.
 3. Set **Output Directory**: `dist`.
-4. Add **Environment Variable**: `VITE_API_URL` pointing to your deployed backend URL (ending in `/api/v1`).
+4. Add **Environment Variable**: `VITE_API_URL=https://mini-attendance-dig9.onrender.com/api/v1`
 
 ## Security Implementation
 
