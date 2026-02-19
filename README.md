@@ -43,11 +43,11 @@ Experience the professional workflow instantly:
 *   **Runtime**: Node.js & Express.js
 *   **Database**: Firebase Firestore (NoSQL)
 *   **Auth**: JSON Web Tokens (JWT) & bcryptjs
-*   **Tooling**: Morgan (Logging), Dotenv (Env Management), Nodemon
+*   **Logging**: Morgan & custom console logging
 
 ### Frontend Experience
-*   **Framework**: React.js (Vite)
-*   **Styling**: Vanilla CSS (Custom Glassmorphism Design System)
+*   **Framework**: React.js 19 (Vite)
+*   **Styling**: Modern CSS Design System (Glassmorphism, CSS Variables, Flexbox/Grid)
 *   **Interaction**: Axios, SweetAlert2 (Premium Notifications)
 
 ---
@@ -78,7 +78,27 @@ graph TD
 
 ---
 
-## 📂 Folder Structure
+## ⚙️ Detailed Configuration Guide
+
+### � Firebase Setup (Backend)
+1. Go to the [Firebase Console](https://console.firebase.google.com/).
+2. Create a new project or select an existing one.
+3. **Firestore Database**: Create a database in "Production" mode. Choose a location close to you.
+4. **Service Account**:
+   - Go to **Project Settings** > **Service accounts**.
+   - Click **Generate new private key**.
+   - Download the `.json` file.
+5. **Environment Mapping**:
+   - `FIREBASE_PROJECT_ID`: Find this in the JSON file.
+   - `FIREBASE_CLIENT_EMAIL`: Find this in the JSON file.
+   - `FIREBASE_PRIVATE_KEY`: Copy the entire text starting with `"-----BEGIN PRIVATE KEY-----\n..."`.
+
+### 🔐 Authentication Setup
+- Generate a strong `JWT_SECRET` string for token signing (e.g., using `openssl rand -base64 32`).
+
+---
+
+## �📂 Folder Structure
 
 ```text
 Attendance/
@@ -140,55 +160,67 @@ All routes are prefixed with `/api/v1`.
 
 ---
 
-## ⚙️ Setup & Installation
+## 🛠️ Local Development
 
-### 1️⃣ Repository Setup
+### 1️⃣ Clone the repository
 ```bash
 git clone https://github.com/suborazz/mini-attendance.git
 cd mini-attendance
 ```
 
-### 2️⃣ Backend Configuration
+### 2️⃣ Backend Startup
 ```bash
 cd backend
 npm install
+# Configure .env based on the table below
+npm run dev 
 ```
-Create a `.env` file with these keys:
-```env
-PORT=5000
-JWT_SECRET=your_jwt_secret_key
-FIREBASE_PROJECT_ID=your_id
-FIREBASE_CLIENT_EMAIL=your_email
-FIREBASE_PRIVATE_KEY="your_private_key"
-```
-Run Server: `npm run dev`
 
-### 3️⃣ Frontend Configuration
+### 3️⃣ Frontend Startup
 ```bash
 cd ../frontend
 npm install
+# Configure .env with VITE_API_URL=http://localhost:5000/api/v1
+npm run dev
 ```
-Create a `.env` file:
-```env
-VITE_API_URL=http://localhost:5000/api/v1
-```
-Run Client: `npm run dev`
 
 ---
 
-## 🚀 Deployment Guide
+## � Troubleshooting Guide
 
-### 🧱 Render (Backend)
-1. **Web Service**: Create one and connect your repo.
-2. **Build**: `npm install` (Root: `backend`).
-3. **Start**: `node server.js`.
-4. **Secrets**: Add all `.env` keys in the Render dashboard.
+| Issue | Solution |
+| :--- | :--- |
+| **Infinite Loading** | Check if the backend server is running and `VITE_API_URL` is correct. |
+| **CORS Error** | Ensure the frontend domain is added to the backend CORS whitelist in `app.js`. |
+| **Invalid Date in Logs** | Fixed! The system now automatically handles Firestore Timestamps. |
+| **401 Unauthorized** | Token might be expired. Try logging out and logging back in. |
+| **Firestore Index Error** | Fixed! Results are now sorted in-memory to avoid manual console configuration. |
 
-### 🌐 Vercel (Frontend)
-1. **Connect**: Point Vercel to the repo.
-2. **Root**: Select `frontend` as the root directory.
-3. **Build**: `npm run build` (Output: `dist`).
-4. **Secrets**: Add `VITE_API_URL` pointing to your Render backend gateway.
+---
+
+## 🚀 Deployment
+
+### Render (Backend)
+- **Environment**: Node
+- **Build Command**: `npm install`
+- **Start Command**: `node server.js`
+- **Environment Variables**: Port, Firestore secrets, JWT secret.
+
+### Vercel (Frontend)
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Environment Variables**: `VITE_API_URL`.
+
+---
+
+## 🤝 Contributing
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
 
@@ -197,4 +229,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
-Developed with ❤️ by [Subod](https://github.com/suborazz)
+Developed with ❤️ by [Subodh](https://github.com/suborazz)
